@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS task_logs;
+DROP TABLE IF EXISTS tasks;

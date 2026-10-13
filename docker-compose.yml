@@ -1,0 +1,70 @@
+services:
+  mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: gdc
+      MYSQL_USER: gdc
+      MYSQL_PASSWORD: gdc_secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  migrate:
+    image: migrate/migrate:latest
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./migrations:/migrations
+    command:
+      - "-path=/migrations"
+      - "-database=mysql://gdc:gdc_secret@tcp(mysql:3306)/gdc"
+      - "up"
+
+  api:
+    build: .
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      APP_ENV: development
+      APP_NAME: gdc-task-api
+      APP_PORT: "8080"
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_USER: gdc
+      DB_PASSWORD: gdc_secret
+      DB_NAME: gdc
+      REDIS_ADDR: redis:6379
+      JWT_SECRET: change-me-in-production-please-use-a-long-random-value
+      JWT_ISSUER: gdc-task-api
+      JWT_ACCESS_TTL: 15m
+      JWT_REFRESH_TTL: 168h
+      IDEMPOTENCY_TTL: 24h
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysql_data:

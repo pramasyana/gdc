@@ -1,0 +1,749 @@
+basePath: /
+definitions:
+  github_com_ryanpramasyana_gdc_internal_package_auth_handler_dto_request.LoginRequest:
+    properties:
+      email:
+        example: jane@example.com
+        type: string
+      password:
+        example: secret123
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  github_com_ryanpramasyana_gdc_internal_package_auth_handler_dto_request.LogoutRequest:
+    properties:
+      refresh_token:
+        example: eyJhbGciOi...
+        type: string
+    type: object
+  github_com_ryanpramasyana_gdc_internal_package_auth_handler_dto_request.RefreshRequest:
+    properties:
+      refresh_token:
+        example: eyJhbGciOi...
+        type: string
+    required:
+    - refresh_token
+    type: object
+  github_com_ryanpramasyana_gdc_internal_package_auth_handler_dto_request.RegisterRequest:
+    properties:
+      email:
+        example: jane@example.com
+        type: string
+      name:
+        example: Jane Doe
+        maxLength: 120
+        minLength: 1
+        type: string
+      password:
+        example: secret123
+        minLength: 8
+        type: string
+      team_name:
+        example: Platform
+        maxLength: 120
+        type: string
+    required:
+    - email
+    - name
+    - password
+    type: object
+  github_com_ryanpramasyana_gdc_internal_package_auth_handler_dto_response.AuthResponse:
+    properties:
+      access_expires_at:
+        example: "2026-01-02T15:19:05Z"
+        type: string
+      access_token:
+        example: eyJhbGciOi...
+        type: string
+      refresh_expires_at:
+        example: "2026-01-09T15:04:05Z"
+        type: string
+      refresh_token:
+        example: eyJhbGciOi...
+        type: string
+      user:
+        $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_user_handler_dto_response.UserResponse'
+    type: object
+  github_com_ryanpramasyana_gdc_internal_package_task_handler_dto_request.AssignTaskRequest:
+    properties:
+      assignee_id:
+        example: 2
+        type: integer
+    required:
+    - assignee_id
+    type: object
+  github_com_ryanpramasyana_gdc_internal_package_task_handler_dto_request.CreateTaskRequest:
+    properties:
+      description:
+        example: Quarterly report
+        maxLength: 5000
+        type: string
+      due_date:
+        example: "2026-01-10T17:00:00Z"
+        type: string
+      status:
+        enum:
+        - todo
+        - in_progress
+        - done
+        - cancelled
+        example: todo
+        type: string
+      title:
+        example: Write the report
+        maxLength: 255
+        minLength: 1
+        type: string
+    required:
+    - title
+    type: object
+  github_com_ryanpramasyana_gdc_internal_package_task_handler_dto_request.UpdateTaskRequest:
+    properties:
+      description:
+        example: Quarterly report
+        maxLength: 5000
+        type: string
+      due_date:
+        example: "2026-01-10T17:00:00Z"
+        type: string
+      status:
+        enum:
+        - todo
+        - in_progress
+        - done
+        - cancelled
+        example: in_progress
+        type: string
+      title:
+        example: Write the report
+        maxLength: 255
+        minLength: 1
+        type: string
+    required:
+    - title
+    type: object
+  github_com_ryanpramasyana_gdc_internal_package_task_handler_dto_response.TaskResponse:
+    properties:
+      assignee_id:
+        example: 2
+        type: integer
+      created_at:
+        example: "2026-01-02T15:04:05Z"
+        type: string
+      description:
+        example: Quarterly report
+        type: string
+      due_date:
+        example: "2026-01-10T17:00:00Z"
+        type: string
+      id:
+        example: 1
+        type: integer
+      owner_id:
+        example: 1
+        type: integer
+      status:
+        example: todo
+        type: string
+      team_id:
+        example: 1
+        type: integer
+      title:
+        example: Write the report
+        type: string
+      updated_at:
+        example: "2026-01-02T15:04:05Z"
+        type: string
+    type: object
+  github_com_ryanpramasyana_gdc_internal_package_user_handler_dto_request.UpdateProfileRequest:
+    properties:
+      email:
+        example: jane@example.com
+        type: string
+      name:
+        example: Jane Doe
+        maxLength: 120
+        minLength: 1
+        type: string
+    required:
+    - email
+    - name
+    type: object
+  github_com_ryanpramasyana_gdc_internal_package_user_handler_dto_response.UserResponse:
+    properties:
+      created_at:
+        example: "2026-01-02T15:04:05Z"
+        type: string
+      email:
+        example: jane@example.com
+        type: string
+      id:
+        example: 1
+        type: integer
+      name:
+        example: Jane Doe
+        type: string
+      updated_at:
+        example: "2026-01-02T15:04:05Z"
+        type: string
+    type: object
+  github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse:
+    properties:
+      code:
+        type: string
+      errors:
+        additionalProperties:
+          type: string
+        type: object
+      message:
+        type: string
+      status:
+        type: integer
+      timestamp:
+        type: string
+    type: object
+  github_com_ryanpramasyana_gdc_internal_shared_response.ListResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      metadata:
+        $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.Metadata'
+      success:
+        type: boolean
+    type: object
+  github_com_ryanpramasyana_gdc_internal_shared_response.Metadata:
+    properties:
+      current_page:
+        type: integer
+      per_page:
+        type: integer
+      total:
+        type: integer
+      total_pages:
+        type: integer
+    type: object
+  github_com_ryanpramasyana_gdc_internal_shared_response.SuccessResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@example.com
+    name: API Support
+  description: Multi-user task management API with JWT auth, idempotent task creation
+    and transactional assignment.
+  termsOfService: http://swagger.io/terms/
+  title: GDC Task Management API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates a user and returns a token pair.
+      parameters:
+      - description: Login payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_auth_handler_dto_request.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_auth_handler_dto_response.AuthResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+      summary: Log in
+      tags:
+      - Auth
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: Revokes the current access token and, when supplied, the refresh
+        token.
+      parameters:
+      - description: Optional refresh token
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_auth_handler_dto_request.LogoutRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.SuccessResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Log out
+      tags:
+      - Auth
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Rotates a valid refresh token and returns a new token pair.
+      parameters:
+      - description: Refresh payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_auth_handler_dto_request.RefreshRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_auth_handler_dto_response.AuthResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+      summary: Refresh tokens
+      tags:
+      - Auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Creates a user with a personal team and returns a token pair.
+      parameters:
+      - description: Registration payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_auth_handler_dto_request.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_auth_handler_dto_response.AuthResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+      summary: Register a new user
+      tags:
+      - Auth
+  /health:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.SuccessResponse'
+      summary: Liveness probe
+      tags:
+      - Health
+  /ready:
+    get:
+      description: Verifies connectivity to MySQL and Redis.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.SuccessResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+      summary: Readiness probe
+      tags:
+      - Health
+  /tasks:
+    get:
+      description: Lists tasks the caller owns or is assigned to, with optional status
+        filter, title search and pagination.
+      parameters:
+      - description: Filter by status
+        enum:
+        - todo
+        - in_progress
+        - done
+        - cancelled
+        in: query
+        name: status
+        type: string
+      - description: Search by title
+        in: query
+        name: search
+        type: string
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ListResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_task_handler_dto_response.TaskResponse'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List tasks
+      tags:
+      - Tasks
+    post:
+      consumes:
+      - application/json
+      description: Creates a task. Requires an Idempotency-Key header; retries with
+        the same key return the original response without creating a duplicate.
+      parameters:
+      - description: UUID idempotency key
+        in: header
+        name: Idempotency-Key
+        required: true
+        type: string
+      - description: Task payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_task_handler_dto_request.CreateTaskRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_task_handler_dto_response.TaskResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a task
+      tags:
+      - Tasks
+  /tasks/{id}:
+    delete:
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.SuccessResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete a task
+      tags:
+      - Tasks
+    get:
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_task_handler_dto_response.TaskResponse'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get task detail
+      tags:
+      - Tasks
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Task payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_task_handler_dto_request.UpdateTaskRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_task_handler_dto_response.TaskResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update a task
+      tags:
+      - Tasks
+  /tasks/{id}/assign:
+    post:
+      consumes:
+      - application/json
+      description: Assigns the task to another member of the task's team inside a
+        single transaction that also writes the audit log and dispatches a notification.
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Assignee payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_task_handler_dto_request.AssignTaskRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_task_handler_dto_response.TaskResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Assign a task
+      tags:
+      - Tasks
+  /users/me:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_user_handler_dto_response.UserResponse'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get current user
+      tags:
+      - Users
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Profile payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_user_handler_dto_request.UpdateProfileRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_package_user_handler_dto_response.UserResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/github_com_ryanpramasyana_gdc_internal_shared_response.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update current user
+      tags:
+      - Users
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer" followed by a space and the JWT access token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
